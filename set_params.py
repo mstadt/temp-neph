@@ -46,13 +46,13 @@ def set_torq_params(species,sex,preg):
         torqR = 0.0014 #Reference radius
         torqL = 2.50e-4 #Microvillous length
         torqd = 1.5e-05 #Height above the microvillous tip
-        torqvm = 0.02 #Compliance Fortran Code
+        torqvm = 0.020 #Compliance Fortran Code
         PbloodPT = 20.0e0 #Reference pressure
     elif species == 'rat':
         if sex == 'male':
-            Radref = 0.00265/2.0
+            Radref = 0.0025/2.0
             torqR = 0.00112
-            torqvm = 0.02
+            torqvm = 0.030
             PbloodPT = 9.0e0
         elif sex == 'female':
             if preg == 'non':
@@ -79,7 +79,7 @@ def set_torq_params(species,sex,preg):
             torqvm = 0.0275
             PbloodPT = 9.0e0
         elif sex == 'female':
-            Radref = 0.0018/2.0 #female radius
+            Radref = 0.002125/2.0 #female radius
             torqR = 0.00095
             torqvm = 0.030
             PbloodPT = 8.0e0
@@ -211,12 +211,12 @@ def read_params(cell,filename,j):
                         elif cell.sex == 'female':
                             cell.len = 0.3*0.9 
 
-                #if cell.type != 'sup' and cell.species == 'mou':
-                    #if cell.segment == 'PT':
-                    #    if cell.sex == 'male':
-                    #        cell.len = 0.6
-                    #    elif cell.sex == 'female':
-                    #        cell.len = 0.6*0.9 #0.05*0.85, updated female
+                if cell.type != 'sup' and cell.species == 'mou':
+                    if cell.segment == 'PT':
+                        if cell.sex == 'male':
+                            cell.len = 0.6
+                        elif cell.sex == 'female':
+                            cell.len = 0.05*0.9 #0.05*0.85, updated female
                     #elif cell.segment == 'CNT':
                     #    if cell.sex == 'male':
                     #        cell.len = 0.12
@@ -278,15 +278,15 @@ def read_params(cell,filename,j):
             # parameter files specify pressure (value) for superficial nephrons
                 if cell.type !='sup' and cell.segment == 'PT' and cell.species == 'rat':
                     if cell.sex == 'male':
-                        cell.pres[0] = 14.0
+                        cell.pres[0] = 12.5
                     elif cell.sex == 'female':
-                        cell.pres[0] = 14.0 #12.75
+                        cell.pres[0] = 12.75 #12.5
 
                 if cell.type !='sup' and cell.segment == 'PT' and cell.species == 'mou':
                     if cell.sex == 'male':
-                        cell.pres[0] = 8.5
+                        cell.pres[0] = 12.5
                     elif cell.sex == 'female':
-                        cell.pres[0] = 8.5
+                        cell.pres[0] = 12.7
 
                 if cell.diabete != 'Non' and cell.species == 'hum':
                     if cell.type == 'sup' and cell.segment == 'PT':
@@ -838,9 +838,9 @@ def read_params(cell,filename,j):
                 elif cell.segment == 'PT' and cell.type != 'sup' and cell.species == 'mou':
                     if compart_id[tmp[1]] == 0:	
                         if cell.sex == 'male':
-                            cell.vol[0] = 0.00204
+                            cell.vol[0] = 0.001533
                         elif cell.sex == 'female':
-                            cell.vol[0] = 0.001632
+                            cell.vol[0] = 0.006
                         cell.vol_init[0] = cell.vol[0]
                     else:
                         cell.vol[compart_id[tmp[1]]] = float(num[0])
@@ -883,10 +883,10 @@ def read_params(cell,filename,j):
                             cell.vol_init[0] = cell.vol[0]
                     elif cell.sex == 'female':
                         if cell.segment == 'PT' and cell.type == 'sup':
-                            cell.vol[0] = 0.0075
+                            cell.vol[0] = 0.004*1.75#1.5
                             cell.vol_init[0] = cell.vol[0]
                         if cell.segment == 'PT' and cell.type != 'sup':
-                            cell.vol[0] = 0.008775
+                            cell.vol[0] = 0.006*1.17
                             cell.vol_init[0] = cell.vol[0]
 
                 if cell.diabete == 'Moderate' and cell.species == 'hum':
