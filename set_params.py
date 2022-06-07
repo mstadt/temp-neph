@@ -50,10 +50,8 @@ def set_torq_params(species,sex,preg):
         PbloodPT = 20.0e0 #Reference pressure
     elif species == 'rat':
         if sex == 'male':
-            # Radref = 0.0025/2.0
             Radref = 0.00265/2.0
             torqR = 0.00112
-            # torqvm = 0.030
             torqvm = 0.02
             PbloodPT = 9.0e0
         elif sex == 'female':
